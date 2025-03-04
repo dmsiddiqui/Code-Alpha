@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .calculator {
+            width: 360px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .display {
+            width: calc(100% - 30px);
+            height: 80px;
+            text-align: right;
+            font-size: 36px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            background: #222;
+            color: white;
+            border-radius: 5px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.1s;
+            background: #e0e0e0;
+        }
+        .operator {
+            background: #ff9800;
+            color: white;
+        }
+        .equal {
+            background: #4caf50;
+            color: white;
+            grid-column: span 2;
+        }
+        .clear {
+            background: #f44336;
+            color: white;
+            grid-column: span 2;
+        }
+        button:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <div class="buttons">
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button class="operator" onclick="appendOperator('-')">-</button>
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="appendOperator('.')">.</button>
+            <button class="equal" onclick="calculateResult()">=</button>
+            <button class="operator" onclick="appendOperator('/')">÷</button>
+            <button class="clear" onclick="clearDisplay()">C</button>
+        </div>
+    </div>
+    
+    <script>
+        function appendNumber(number) {
+            document.getElementById("display").value += number;
+        }
+        
+        function appendOperator(operator) {
+            let display = document.getElementById("display").value;
+            if (display.length > 0 && !isNaN(display[display.length - 1])) {
+                document.getElementById("display").value += operator;
+            }
+        }
+        
+        function calculateResult() {
+            try {
+                let result = eval(document.getElementById("display").value);
+                if (!isFinite(result)) {
+                    alert("Math Error");
+                    clearDisplay();
+                } else {
+                    document.getElementById("display").value = result;
+                }
+            } catch (error) {
+                alert("Invalid Expression");
+                clearDisplay();
+            }
+        }
+        
+        function clearDisplay() {
+            document.getElementById("display").value = "";
+        }
+    </script>
+</body>
+</html>
